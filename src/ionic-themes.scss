@@ -1,0 +1,95 @@
+@import "theme-functions";
+
+.bar {
+  background-color: primary-color("P500");
+  border-color: primary-color("P600");
+  .title, .button {
+    color: contrast-color(primary-color("P500"));
+  }
+  .button {
+    &.button-icon {
+      background-color: primary-color("P500");
+      border-color: transparent;
+      &.active, &.activated {
+        border-color: transparent;
+      }
+      &.button-dark {
+        border-color: transparent;
+        background: none;
+      }
+    }
+  }
+}
+
+.checkbox {
+  input:checked:before,
+  input:checked + .checkbox-icon:before {
+    background-color: accent-color("A700");
+    border-color: accent-color("A700");
+  }
+
+  input:after,
+  &-icon:after {
+    border-color: contrast-color(accent-color("A400"), white, primary-color("P500"));
+  }
+}
+
+.pane, .view {
+  background-color: darken(white, 10%);
+}
+
+.button {
+  color: contrast-color(primary-color("P500"));
+  background-color: primary-color("P500");
+  border-color: primary-color("P600");
+    &.accent {
+      color: contrast-color(accent-color("A400"));
+      background-color: accent-color("A400");
+      border-color: accent-color("A700");
+    }
+
+    &.active, &.activated {
+      background-color: primary-color("P600");
+      border-color: primary-color("P700");
+    }
+    &.button-icon {
+      &.activated {
+        background-color: primary-color("P500");
+        border-color: primary-color("P700");
+      }
+    }
+    &:hover {
+      color: contrast-color(primary-color("P500"));
+    }
+    i.icon {
+      color: contrast-color(primary-color("P500"));
+    }
+}
+
+.toggle {
+  input:checked + .track {
+    background-color: accent-color("A700");
+    border-color: accent-color("A700");
+  }
+}
+
+i.icon {
+  color: lighten(black, 30%);
+
+  .item-dark & {
+    color: lighten(black, 90%);
+  }
+}
+.tile-list {
+    .tile-item {
+        background-color: darken(white, 1%);//lighten(primary-color("P50"), 6%);
+        border-color: lighten(black, 35%);
+        &:before {
+          @extend i.icon;
+        }
+    }
+}
+
+.spinner {
+  stroke: accent-color("A700");
+}

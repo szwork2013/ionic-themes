@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="ionicThemes">
+<head>
+	<title>Custom Ionic Themes</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<script src="libs/angular/angular.min.js"></script>
+	<!-- https://github.com/medialize/sass.js -->
+	<script src="libs/sass.js/dist/sass.worker.js"></script>
+	<script>
+		Sass.initialize('libs/sass.js/dist/worker.min.js');
+
+		var appScss = '@import "theme-colors";$primary: $indigo;$accent: $blue;@import "ionic-themes";';
+
+		function addOrUpdateCss (id, css){
+	        var styleNode = document.getElementById(id);
+	        if (!styleNode) {
+	            var head = document.getElementsByTagName("head")[0];
+	            styleNode = document.createElement("STYLE");
+	            styleNode.id = id;
+	            head.appendChild(styleNode);
+	        }
+            styleNode.innerHTML = css;
+		}
+
+		angular.module('ionicThemes',[])
+			.run(function($http, $q){
+
+				var promises = [];
+				promises.push($http.get('../src/theme-colors.scss')
+					.then(function(data){
+					Sass.writeFile('theme-colors.scss', data.data);
+				}));
+				promises.push($http.get('../src/theme-functions.scss')
+					.then(function(data){
+					Sass.writeFile('theme-functions.scss', data.data);
+				}));
+				promises.push($http.get('../src/ionic-themes.scss')
+					.then(function(data){
+					Sass.writeFile('ionic-themes.scss', data.data);
+				}));
+
+				$q.all(promises)
+					.then(function(){
+						Sass.compile(appScss, function(css) {
+							addOrUpdateCss('ionic-themes', css);
+						});
+					});
+
+			});
+		
+	</script>
+</head>
+<body>
+	
+</body>
+</html>
